@@ -1,0 +1,8 @@
+r-recommended
+r-irkernel
+jupyterlab
+r-sits
+r-gdalcubes
+r-rgdal
+r-stars
+r-tensorflow
