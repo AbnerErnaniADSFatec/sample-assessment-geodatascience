@@ -22,10 +22,11 @@ library(rpart)
 library(rpart.plot)
 library(e1071)
 library(fitdistrplus)
+library(httr)
 
 # Reading different extensions of files using the same
 # method with a key ext to extension.
-read_file <- function(file, ext) {
+read_file.tb <- function(file, ext) {
   data.tb <- NULL
   if (ext == "csv") {
     data.tb <- read.csv(file)
@@ -41,7 +42,7 @@ read_file <- function(file, ext) {
 
 # Save different file extensions using the same
 # method with a key to extension.
-save_file <- function(data.tb, name, ext) {
+save_file.tb <- function(data.tb, name, ext) {
     if (ext == "csv") {
         write.csv(data.tb, paste(name, ".csv", sep=""), row.names = FALSE)
     }
