@@ -23,6 +23,7 @@ library(rpart.plot)
 library(e1071)
 library(fitdistrplus)
 library(httr)
+library("rjson")
 
 # Reading different extensions of files using the same
 # method with a key ext to extension.

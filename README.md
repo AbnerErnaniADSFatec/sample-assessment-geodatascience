@@ -47,7 +47,8 @@ R -e "source('./R/install-requirements.R')"
  - Update the `Python` dependencies installation.
 
 ~~~dos
-python -m pip install --upgrade pip
+python -m pip install --upgrade pip &&
+    python -m pip install ipywidgets seaborn tensorflow
 ~~~
 
 - Add `R-Kernel` kernel specification to `Jupyter` installation, so long the `Jupyterhub` will recognize the kernel installation to work interactively:
