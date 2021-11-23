@@ -24,6 +24,7 @@ library(e1071)
 library(fitdistrplus)
 library(httr)
 library("rjson")
+library(jsonlite)
 
 # Reading different extensions of files using the same
 # method with a key ext to extension.
