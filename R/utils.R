@@ -27,6 +27,8 @@ library("rjson")
 library(TSdist)
 library(dtw)
 library(jsonlite)
+library(activelearning)
+library(caret)
 
 # Reading different extensions of files using the same
 # method with a key ext to extension.
