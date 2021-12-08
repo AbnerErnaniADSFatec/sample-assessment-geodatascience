@@ -58,6 +58,34 @@ save_file.tb <- function(data.tb, name, ext) {
     }
 }
 
+# Get colors for LULC classes and the status for quality control
+color.label <- function(label = "") {
+    colors <- list(
+        "Pasture" = "#ff8828",
+        "Forest" = "#005500",
+        "NonForest" = "#0fc80f",
+        "Deforestation" = "#ff5f4c",
+        "clean" = "green",
+        "analyze" = "yellow",
+        "remove" = "red"
+    )
+    return(colors[[label]])
+}
+
+# Colorize the som map with class colors saved above
+to.color <- function(clustering.lst) {
+    clustering <- clustering.lst
+    neurons <- c(1:length(clustering.lst$som_properties$neuron_label))
+    for (neuron in neurons) {
+        label <- clustering.lst$som_properties$neuron_label[[neuron]]
+        new_color <- color.label(label)
+        if (!is.null(new_color)) {
+            clustering$som_properties$paint_map[neuron] <- as.character(new_color)
+        }
+    }
+    return(clustering)
+}
+
 # Get a data tibble file and converts to a readable shapefile.
 # This shape file can be read by leaflet function to display maps.
 point_to_shape_sp <- function (data.tb, date, class_label) {
