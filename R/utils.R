@@ -29,6 +29,7 @@ library(dtw)
 library(jsonlite)
 library(activelearning)
 library(caret)
+library(sp)
 
 # Reading different extensions of files using the same
 # method with a key ext to extension.
@@ -98,7 +99,7 @@ point_to_shape_sp <- function (data.tb, date, class_label) {
 }
 
 # Get a data tibble file and save this data in a shape file
-save_shapefile <- function (data.tb, filename) {
+save_shapefile <- function(data.tb, filename) {
     group_shape <- dplyr::select(data.tb,
         longitude, latitude,
         start_date, end_date,
