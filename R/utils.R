@@ -89,10 +89,12 @@ to.color <- function(clustering.lst) {
 # Get a data tibble file and converts to a readable shapefile.
 # This shape file can be read by leaflet function to display maps.
 point_to_shape_sp <- function (data.tb, date, class_label) {
-    data.tb <- dplyr::filter(
-        data.tb,
-        (as.Date(start_date) <= as.Date(date)) &
-        (as.Date(date) <= as.Date(end_date))
+    try(
+        data.tb <- dplyr::filter(
+            data.tb,
+            (as.Date(start_date) <= as.Date(date)) &
+            (as.Date(date) <= as.Date(end_date))
+        )
     )
     group_shape <- dplyr::select(data.tb,
         longitude, latitude,
@@ -110,12 +112,26 @@ point_to_shape_sp <- function (data.tb, date, class_label) {
         group_shape <- dplyr::select(data.tb,
             longitude, latitude,
             start_date, end_date,
+            label, cube, sample_id
+        )
+    )
+    try(
+        group_shape <- dplyr::select(data.tb,
+            longitude, latitude,
+            start_date, end_date,
             label, cube,
             id_neuron, eval, post_prob
         )
     )
+    colors <- c()
+    for (i in 1:length(group_shape$label)) {
+        colors <- append(colors, color.label(group_shape[i, ]$label))
+    }
+    group_shape <- group_shape %>% dplyr::mutate(color = colors)
     sp_data.tb.df <- as.data.frame(group_shape)
-    sp_data.tb.df <- sp_data.tb.df %>% filter(label == class_label)
+    try(
+        sp_data.tb.df <- sp_data.tb.df %>% filter(label == class_label)
+    )
     points_SF <- as.data.frame(sp_data.tb.df)
     xy <- points_SF[, c(1, 2)]
     sp_data.df <- sp::SpatialPointsDataFrame(
@@ -137,13 +153,6 @@ save_shapefile <- function(data.tb, filename) {
         longitude, latitude,
         start_date, end_date,
         label
-    )
-    try(
-        group_shape <- dplyr::select(data.tb,
-            longitude, latitude,
-            start_date, end_date,
-            label, cube
-        )
     )
     try(
         group_shape <- dplyr::select(data.tb,
@@ -180,6 +189,45 @@ as_sample <- function(data.tb) {
     try(data.tb <- dplyr::select(data.tb, -coverage, -time_series))
     try(data.tb <- dplyr::select(data.tb, -time_series))
     return(data.tb)
+}
+
+# Select random samples from number per class
+random_samples <- function(input_data.tb, n_per_class, classes = c()) {
+    if (length(classes) == 0) {
+        labelled_samples <- input_data.tb %>%
+            dplyr::group_by(label) %>% 
+            dplyr::sample_n(size = n_labelled) %>%
+            dplyr::ungroup()
+        return(labelled_samples)
+    } else {
+        aux_ = as.data.frame(list())
+        for (label_ in classes) {
+            data_ <- dplyr::filter(input_data.tb, label == label_)
+            sel <- sample(nrow(data_), n_per_class, replace = FALSE)
+            random_samples <- data_[sel, ]
+            aux_ <- rbind(aux_, random_samples)
+        }
+        return(aux_)
+    }
+}
+
+get_accuracy_metrics <- function(cm) {
+    overall_accuracy  <- cm$overall["Accuracy"]
+    by_class <- conf_mat[["byClass"]]
+    f1_score <- by_class[, "F1"]
+    prod_acc <- by_class[, "Pos Pred Value"]
+    user_acc <- by_class[, "Sensitivity"]
+    class_names <- stringr::str_sub(rownames(by_class), 8)
+    return(
+        tibble::tibble(class = class_names, metric = "f1_score", accuracy = f1_score) %>%
+            dplyr::bind_rows(
+                tibble::tibble(class = class_names, metric = "prod_acc", accuracy = prod_acc)
+            ) %>%
+                dplyr::bind_rows(
+                    tibble::tibble(class = class_names, metric = "user_acc", accuracy = user_acc)
+                ) %>%
+                    dplyr::add_row(class = "overall", metric = "accuracy", accuracy = overall_accuracy)
+    )
 }
 
 # An implementation for viewing the confusion matrix of a certain algorithm.
