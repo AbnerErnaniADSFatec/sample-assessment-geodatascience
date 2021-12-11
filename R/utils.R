@@ -124,7 +124,7 @@ point_to_shape_sp <- function (data.tb, date, class_label) {
         )
     )
     colors <- c()
-    for (i in 1:length(group_shape$label)) {
+    for (i in 1:nrow(group_shape)) {
         colors <- append(colors, color.label(group_shape[i, ]$label))
     }
     group_shape <- group_shape %>% dplyr::mutate(color = colors)
@@ -169,6 +169,11 @@ save_shapefile <- function(data.tb, filename) {
             id_neuron, eval, post_prob
         )
     )
+    colors <- c()
+    for (i in 1:nrow(group_shape)) {
+        colors <- append(colors, color.label(group_shape[i, ]$label))
+    }
+    group_shape <- group_shape %>% dplyr::mutate(color = colors)
     sp_data.tb.df <- as.data.frame(group_shape)
     points_SF <- as.data.frame(sp_data.tb.df)
     xy <- points_SF[, c(1, 2)]
@@ -192,12 +197,13 @@ as_sample <- function(data.tb) {
 }
 
 # Select random samples from number per class
-random_samples <- function(input_data.tb, n_per_class, classes = c()) {
+random_samples_per_class <- function(input_data.tb, n_per_class, classes = c()) {
     if (length(classes) == 0) {
         labelled_samples <- input_data.tb %>%
             dplyr::group_by(label) %>% 
-            dplyr::sample_n(size = n_labelled) %>%
+            dplyr::sample_n(size = n_per_class) %>%
             dplyr::ungroup()
+        class(labelled_samples) <- c("sits", class(labelled_samples))
         return(labelled_samples)
     } else {
         aux_ = as.data.frame(list())
@@ -207,13 +213,36 @@ random_samples <- function(input_data.tb, n_per_class, classes = c()) {
             random_samples <- data_[sel, ]
             aux_ <- rbind(aux_, random_samples)
         }
+        class(aux_) <- c("sits", class(aux_))
         return(aux_)
     }
 }
 
+# Select random samples from number per class
+random_samples <- function(input_data.tb, n_samples, class = "") {
+    if (class %in% input_data.tb$label) {
+        data.tb <- dplyr::filter(input_data.tb, label == class)
+        sel <- sample(nrow(data.tb), n_samples, replace = FALSE)
+        return(data.tb[sel, ])
+    } else {
+        sel <- sample(nrow(input_data.tb), n_samples, replace = FALSE)
+        return(input_data.tb[sel, ])
+    }
+    
+}
+
+# Get the training and testing from data set
+get_train_test_set <- function(input_data.tb, prop = 0.7) {
+    rows <- sample(nrow(input_data.tb), replace = FALSE)
+    samples <- input_data.tb[rows, ]
+    dt <- sample(nrow(samples), nrow(samples) * prop, replace = FALSE)
+    return(list(train = samples[dt,], test = samples[-dt,]))
+}
+
+# Get accuracy metrics from confusion matrix
 get_accuracy_metrics <- function(cm) {
     overall_accuracy  <- cm$overall["Accuracy"]
-    by_class <- conf_mat[["byClass"]]
+    by_class <- cm[["byClass"]]
     f1_score <- by_class[, "F1"]
     prod_acc <- by_class[, "Pos Pred Value"]
     user_acc <- by_class[, "Sensitivity"]
@@ -245,6 +274,34 @@ cm_plot <- function(cm, x_ac = 1, model_type = "Default"){
                         axis.title.y = element_text(size = 14)
                     )
     return(p)
+}
+
+# Get Active Learning Metrics for Result Classification
+get_metrics <- function(points_tb) {
+    metrics <- as.data.frame(list())
+    for (i in 1:nrow(points_tb)) {
+        true_class <- points_tb[i, ]["label"]
+        pred_df <- points_tb[i, ][["predicted"]][[1]]
+        probs <- unlist(pred_df[["probs"]][[1]])
+        least_conf <- (1 - max(probs)) * length(probs) / (length(probs) - 1)
+        best_two <- sort(probs, decreasing = TRUE)[1:2]
+        names(best_two) <- NULL
+        margin_conf <- 1 - (best_two[1] - best_two[2])
+        ratio_conf <- best_two[1] / best_two[2]
+        entropy <- -1 * sum(probs * log(probs))
+        metrics <- rbind(
+            metrics,
+            data.frame(
+                entropy = entropy,
+                least_conf = least_conf,
+                margin_conf = margin_conf,
+                ratio_conf = ratio_conf,
+                new_label = pred_df[["class"]],
+                true_class = true_class
+            )
+        )
+    }
+    return(metrics)
 }
 
 # Get the mode based on statistical moments.
