@@ -144,45 +144,39 @@ point_to_shape_sp <- function (data.tb, date, class_label) {
 
 # Get a data tibble file and save this data in a shape file
 save_shapefile <- function(data.tb, filename) {
-    group_shape <- dplyr::select(data.tb,
-        longitude, latitude,
-        start_date, end_date,
-        label
-    )
-    group_shape <- dplyr::select(data.tb,
-        longitude, latitude,
-        start_date, end_date,
-        label
-    )
-    try(
-        group_shape <- dplyr::select(data.tb,
-            longitude, latitude,
-            start_date, end_date,
-            label, cube, -time_series
-        )
-    )
-    try(
-        group_shape <- dplyr::select(data.tb,
-            longitude, latitude,
-            start_date, end_date,
-            label, cube,
-            id_neuron, eval, post_prob
-        )
-    )
-    colors <- c()
-    for (i in 1:nrow(group_shape)) {
-        colors <- append(colors, color.label(group_shape[i, ]$label))
-    }
-    group_shape <- group_shape %>% dplyr::mutate(color = colors)
-    sp_data.tb.df <- as.data.frame(group_shape)
-    points_SF <- as.data.frame(sp_data.tb.df)
-    xy <- points_SF[, c(1, 2)]
-    sp_data.df <- sp::SpatialPointsDataFrame(
-        coords = xy,
-        data = points_SF,
-        proj4string = sp::CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
-    )
+    sp_data.df <- point_to_shape_sp(data.tb)
     writeOGR(sp_data.df, ".", filename, driver = "ESRI Shapefile")
+}
+
+# Convert BBOX EPSG 4326
+convert_bbox_epsg_4326 <- function(coords) {
+    # Setting coordinates for bbox
+    # coords = list(
+    #     lon_min = -64.9583215,
+    #     lon_max = -64.7443645,
+    #     lat_min = -10.7323301,
+    #     lat_max = -10.5699696
+    # )
+    # Creating polygon with coordinates
+    poly <- sf::st_polygon(
+        list(
+            rbind(
+                c(coords$lon_min, coords$lat_min), 
+                c(coords$lon_max, coords$lat_min), 
+                c(coords$lon_max, coords$lat_max), 
+                c(coords$lon_min, coords$lat_max), 
+                c(coords$lon_min, coords$lat_min)
+            )
+        )
+    )
+    # Adding the projection
+    poly_sf <- sf::st_sfc(poly, crs = 4326)
+    # Setting the polygon projection
+    poly_sf <- sf::st_transform(
+        poly_sf,
+        crs = "+proj=aea +lat_0=-12 +lon_0=-54 +lat_1=-2 +lat_2=-22 +x_0=5000000 +y_0=10000000 +ellps=GRS80 +units=m +no_defs "
+    )
+    return(sf::st_bbox(poly_sf))
 }
 
 # remove the time_series and cube.
