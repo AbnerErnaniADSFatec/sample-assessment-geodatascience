@@ -290,7 +290,7 @@ get_metrics <- function(points_tb) {
                 least_conf = least_conf,
                 margin_conf = margin_conf,
                 ratio_conf = ratio_conf,
-                new_label = pred_df[["class"]],
+                prediction = pred_df[["class"]],
                 true_class = true_class
             )
         )
