@@ -95,11 +95,11 @@ jupyter lab
 
 With the dependencies installed it is possible to run the Jupyter notebook environment and also possible to run the _scripts_ present in this repository. This approach is based on two `Jupyter Notebooks` as you see below:
 
+- The Jupyter Notebook require to download the images for reproduction of the tests is available on this link ["Data Science for LULC Samples"](https://github.com/AbnerErnaniADSFatec/sample-assessment-data-science).
+
+- All test data can be acquired from github via the link ["Data Source"](https://github.com/AbnerErnaniADSFatec/computational-statistics-data/tree/main/data-science).
+
  - The notebook for application and analysis of active learning for land use and land cover using the R programming language: ["Jupyter Notebook to Defining Land Use and Land Cover Samples for classification"](GeoDataScience.ipynb).
-
-The Jupyter Notebook require to download the images for reproduction of the tests is available on this link ["Data Science for LULC Samples"](https://github.com/AbnerErnaniADSFatec/sample-assessment-data-science).
-
-All test data can be acquired from github via the link ["Data Source"](https://github.com/AbnerErnaniADSFatec/computational-statistics-data/tree/main/data-science).
 
 ## Conclusion
 
