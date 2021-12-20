@@ -17,10 +17,10 @@
 >
 > Entrega                  | Descrição
 > -------------------------|-----------
-> [Slides da Apresentação](https://drive.google.com/file/d/17S3msSZWz80V-7kC5LOzq29I6qf-kzla/view?usp=sharing) | Powerpoint da apresentação no google drive em formato PDF.
-> [Artigo do Trabalho Final](https://drive.google.com/file/d/16Vr_onhYtsL0M0Rw4wi9hUUjoMA0GEij/view?usp=sharing) | Link do google drive para o arquivo PDF.
-> [Código-fonte](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/GeoDataScience.ipynb) | Link para o repositório do github com o código e a explicação dos dados.
-> [Dados Usados](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/data/samples) | Dados usados Link para o arquivo no github contendo os dados brutos.
+> [Slides da Apresentação](https://drive.google.com/file/d/17S3msSZWz80V-7kC5LOzq29I6qf-kzla/view?usp=sharing) | Link do google drive para o powerpoint da apresentação em formato PDF.
+> [Artigo do Trabalho Final](https://drive.google.com/file/d/16Vr_onhYtsL0M0Rw4wi9hUUjoMA0GEij/view?usp=sharing) | Link do google drive para o artigo do trabalho final em formato PDF.
+> [Código-fonte](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/GeoDataScience.ipynb) | Link para o Jupyter Notebook no github com o código e a explicação dos dados.
+> [Dados Usados](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/data/samples) | Link para os dados usados no repositório do github contendo os dados brutos.
 >
 > Obs.: Contact abiner.anjos@inpe.br or abiner.anjos@gmail.com.
 
