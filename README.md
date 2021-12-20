@@ -22,7 +22,7 @@
 > Código-fonte             | Link para o repositório do github com o código e a explicação dos dados. | https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/GeoDataScience.ipynb
 > Dados Usados             | Dados usados Link para o arquivo no github contendo os dados brutos.     | https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/data/samples
 >
-> Obs.: Contact abiner.anjos@inpe.br ou abiner.anjos@gmail.com.
+> Obs.: Contact abiner.anjos@inpe.br or abiner.anjos@gmail.com.
 
 ## Development Environment
 
