@@ -15,12 +15,12 @@
 > Este Jupyter Notebook contém os estudos relacionados ao projeto final da disciplina de aprendizado profundo.
 > A tabela apresenta as entregas da disciplina
 >
-> Entrega                  | Descrição                                                                | Link
-> -------------------------|--------------------------------------------------------------------------|------
-> Slides da Apresentação   | Powerpoint da apresentação no google drive em formato PDF.               | https://drive.google.com/file/d/17S3msSZWz80V-7kC5LOzq29I6qf-kzla/view?usp=sharing
-> Artigo do Trabalho Final | Link do google drive para o arquivo PDF.                                 | https://drive.google.com/file/d/16Vr_onhYtsL0M0Rw4wi9hUUjoMA0GEij/view?usp=sharing
-> Código-fonte             | Link para o repositório do github com o código e a explicação dos dados. | https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/GeoDataScience.ipynb
-> Dados Usados             | Dados usados Link para o arquivo no github contendo os dados brutos.     | https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/data/samples
+> Entrega                  | Descrição
+> -------------------------|-----------
+> [Slides da Apresentação](https://drive.google.com/file/d/17S3msSZWz80V-7kC5LOzq29I6qf-kzla/view?usp=sharing) | Powerpoint da apresentação no google drive em formato PDF.
+> [Artigo do Trabalho Final](https://drive.google.com/file/d/16Vr_onhYtsL0M0Rw4wi9hUUjoMA0GEij/view?usp=sharing) | Link do google drive para o arquivo PDF.
+> [Código-fonte](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/GeoDataScience.ipynb) | Link para o repositório do github com o código e a explicação dos dados.
+> [Dados Usados](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/data/samples) | Dados usados Link para o arquivo no github contendo os dados brutos.
 >
 > Obs.: Contact abiner.anjos@inpe.br or abiner.anjos@gmail.com.
 
