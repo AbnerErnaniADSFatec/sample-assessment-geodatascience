@@ -18,7 +18,7 @@
 > Entrega                  | Descrição
 > -------------------------|-----------
 > [Slides da Apresentação](https://drive.google.com/file/d/17S3msSZWz80V-7kC5LOzq29I6qf-kzla/view?usp=sharing) | Link do google drive para o powerpoint da apresentação em formato PDF.
-> [Artigo do Trabalho Final](https://drive.google.com/file/d/16Vr_onhYtsL0M0Rw4wi9hUUjoMA0GEij/view?usp=sharing) | Link do google drive para o artigo do trabalho final em formato PDF.
+> [Artigo do Trabalho Final](https://drive.google.com/file/d/1N_wL98Xp31_O2IK6aSyj4o0MlCvZlYAg/view?usp=sharing) | Link do google drive para o artigo do trabalho final em formato PDF.
 > [Código-fonte](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/GeoDataScience.ipynb) | Link para o Jupyter Notebook no github com o código e a explicação dos dados.
 > [Dados Usados](https://github.com/AbnerErnaniADSFatec/sample-assessment-geodatascience/tree/main/data/samples) | Link para os dados usados no repositório do github contendo os dados brutos.
 >
